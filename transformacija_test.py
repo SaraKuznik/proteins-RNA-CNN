@@ -115,9 +115,11 @@ resolution = structure.header['resolution']
 keywords = structure.header['keywords']
 
 atoms = {}
+s = 0
 for model in structure:
     for chain in model:
         for residue in chain:
+            s += 1
             for atom in residue:
                 atoms[atom.id] = atom.get_coord()
 
@@ -155,15 +157,16 @@ for model in structure:
             fig = plt.figure(figsize=plt.figaspect(0.5))
 
             ax = fig.add_subplot(1, 2, 1, projection='3d')
-            ax.plot(t[:,0], t[:,1], t[:,2], 'ro')
+            ax.plot(t[:,0], t[:,1], t[:,2], 'ko')
             b_ = a + (b-a)*0.1
-            ax.plot([a[0], b_[0]], [a[1], b_[1]], [a[2], b_[2]], 'k')
-            ax.plot([a[0], c[0]], [a[1], c[1]], [a[2], c[2]], 'k')
+            c_ = a + (c-a)*2
+            ax.plot([a[0], b_[0]], [a[1], b_[1]], [a[2], b_[2]], 'r')
+            ax.plot([a[0], c_[0]], [a[1], c_[1]], [a[2], c_[2]], 'b')
             #ax.quiver([a[0]], [a[1]], [a[2]], [b[0]], [b[1]], [b[2]])
  
 
             ax = fig.add_subplot(1, 2, 2, projection='3d')
-            ax.plot(tn[:,0], tn[:,1], tn[:,2], 'o')
+            ax.plot(tn[:,0], tn[:,1], tn[:,2], 'ko')
             an = m.dot(np.append(a,1))
             bn = m.dot(np.append(b,1))
             itmax = np.array([max(point[i] for point in tn) for i in range(3)])
