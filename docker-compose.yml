@@ -1,0 +1,16 @@
+version: '3.5'
+services:
+  head:
+    container_name: mag_container
+    image: mag
+    runtime: nvidia
+    ports:
+      - "6006:6006"
+      - "8888:8888"
+    volumes:
+     - ./:/home/mag
+    environment:
+      JUPYTER_PASSWORD: "${JUPYTER_PASSWORD}"
+      JUPYTER_PORT: 8888
+      TENSORBOARD_LOGDIR: "./logs/"
+      TENSORBOARD_PORT: 6006
